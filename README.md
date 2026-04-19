@@ -135,10 +135,10 @@ ai-scrum-master/
 
 ## Deployment
 
-### Docker Production
+### Docker 
 
 ```bash
-docker-compose -f docker-compose.yml up -d
+ docker-compose up -d
 ```
 
 ### Manual Deployment
