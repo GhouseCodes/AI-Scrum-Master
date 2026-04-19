@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Scrum Master Pro | Agile Project Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .story-card {
+            transition: all 0.3s ease;
+        }
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .smooth-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        /* Kanban column styling */
+        .kanban-column {
+            min-height: 500px;
+        }
+        /* Pulse animation for AI activity */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="gradient-bg text-white">
+            <div class="container mx-auto px-4 py-6">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-4">
+                        <i class="fas fa-robot text-3xl"></i>
+                        <h1 class="text-2xl font-bold">AI Scrum Master</h1>
+                    </div>
+                    <nav>
+                        <ul class="flex space-x-6">
+                            <li><button onclick="showSection('dashboard')" class="hover:text-gray-200 font-medium flex items-center"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</button></li>
+                            <li><button onclick="showSection('sprint')" class="hover:text-gray-200 font-medium flex items-center"><i class="fas fa-running mr-2"></i> Sprint Board</button></li>
+                            <li><button onclick="showSection('backlog')" class="hover:text-gray-200 font-medium flex items-center"><i class="fas fa-tasks mr-2"></i> Backlog</button></li>
+                            <li><button onclick="showSection('analytics')" class="hover:text-gray-200 font-medium flex items-center"><i class="fas fa-chart-line mr-2"></i> Analytics</button></li>
+                            <li><button onclick="showSection('retro')" class="hover:text-gray-200 font-medium flex items-center"><i class="fas fa-comments mr-2"></i> Retro</button></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-gray-500 font-medium">Current Sprint</h3>
+                        <p class="text-3xl font-bold mt-2" id="current-sprint-name">Sprint 12</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-gray-500 font-medium">Days Remaining</h3>
+                        <p class="text-3xl font-bold mt-2" id="days-remaining">7</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-gray-500 font-medium">Tasks Completed</h3>
+                        <p class="text-3xl font-bold mt-2" id="tasks-completed">18/32</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-gray-500 font-medium">Team Velocity</h3>
+                        <p class="text-3xl font-bold mt-2" id="team-velocity">24</p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 mb-8 smooth-shadow">
+                    <h2 class="text-xl font-bold mb-4">Standup Summary <span id="standup-date" class="text-gray-500"></span></h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Alice</p>
+                                <p class="text-gray-600" id="alice-standup">Worked on authentication, plan to finish today. Blocked by API rate limiting.</p>
+                            </div>
+                        </div>
+                        <!-- More team members would appear here -->
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="font-bold mb-2">AI Analysis</h3>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-robot text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="font-medium">AI Scrum Master</p>
+                                    <p class="text-gray-600">[AI Analysis] I've reviewed the team's updates:
+                                    <ul class="list-disc ml-4 mt-2 space-y-1">
+                                        <li>🔴 Critical: API rate limits are blocking Alice's progress</li>
+                                        <li>🟢 Bob is progressing well on UI redesign</li>
+                                        <li>🔵 Team velocity trending at 85% of sprint goal</li>
+                                    </ul>
+                                    Suggested action: Pair Alice with Charlie to resolve the API issue ASAP.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="generateDailyInsights()">
+                        <i class="fas fa-magic mr-2"></i> Generate Insights
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg p-6 smooth-shadow">
+                        <h2 class="text-xl font-bold mb-4">Sprint Burndown</h2>
+                        <div class="h-64">
+                            <canvas id="burndown-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 smooth-shadow">
+                        <h2 class="text-xl font-bold mb-4">Risk Meter</h2>
+                        <div class="h-64">
+                            <canvas id="risk-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sprint Planning Section -->
+            <div id="sprint-section" class="hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Current Sprint</h2>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" onclick="completeSprint()">
+                        Complete Sprint
+                    </button>
+                </div>
+
+                <!-- Kanban Board -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="kanban-column bg-gray-100 rounded-lg p-4">
+                        <h3 class="font-bold mb-4 text-center">To Do</h3>
+                        <div class="space-y-4" id="todo-column">
+                            <div class="story-card bg-white rounded-lg p-4 smooth-shadow cursor-move">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium">Implement OAuth Login</h4>
+                                    <div class="flex space-x-2">
+                                        <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-edit"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div class="flex mt-2 flex-wrap gap-2">
+                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded flex items-center">
+                                        <i class="fas fa-exclamation-circle mr-1"></i> High Priority
+                                    </span>
+                                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded flex items-center">
+                                        <i class="fas fa-star mr-1"></i> 5 points
+                                    </span>
+                                    <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded flex items-center">
+                                        <i class="fas fa-code mr-1"></i> FE Dev
+                                    </span>
+                                </div>
+                                <div class="mt-2 flex items-center">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6cdcc500-7af4-4ba5-9f16-17216c328386.png" alt="Profile icon of developer Alice" class="w-6 h-6 rounded-full mr-2">
+                                    <span class="text-sm text-gray-500">Alice</span>
+                                </div>
+                            </div>
+                            <!-- More cards would appear here -->
+                        </div>
+                        <button class="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded" onclick="showAddTaskModal('todo')">
+                            <i class="fas fa-plus mr-2"></i> Add Task
+                        </button>
+                    </div>
+
+                    <div class="kanban-column bg-gray-100 rounded-lg p-4">
+                        <h3 class="font-bold mb-4 text-center">In Progress</h3>
+                        <div class="space-y-4" id="inprogress-column">
+                            <div class="story-card bg-white rounded-lg p-4 smooth-shadow cursor-move">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium">Dashboard UI Redesign</h4>
+                                    <div class="flex space-x-2">
+                                        <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-edit"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div class="flex mt-2">
+                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">Medium Priority</span>
+                                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded ml-2">8 points</span>
+                                </div>
+                                <div class="mt-2 flex items-center">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8033f205-d6db-4ee2-b1e5-e2a948c7175f.png" alt="Profile icon of developer Bob" class="w-6 h-6 rounded-full mr-2">
+                                    <span class="text-sm text-gray-500">Bob</span>
+                                </div>
+                            </div>
+                            <!-- More cards would appear here -->
+                        </div>
+                        <button class="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded" onclick="showAddTaskModal('inprogress')">
+                            <i class="fas fa-plus mr-2"></i> Add Task
+                        </button>
+                    </div>
+
+                    <div class="kanban-column bg-gray-100 rounded-lg p-4">
+                        <h3 class="font-bold mb-4 text-center">Done</h3>
+                        <div class="space-y-4" id="done-column">
+                            <div class="story-card bg-white rounded-lg p-4 smooth-shadow cursor-move">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium">API Rate Limiter</h4>
+                                    <div class="flex space-x-2">
+                                        <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-edit"></i></button>
+                                        <button class="text-gray-400 hover:text-gray-600"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                                <div class="flex mt-2">
+                                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">Completed</span>
+                                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded ml-2">3 points</span>
+                                </div>
+                                <div class="mt-2 flex items-center">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a0790b0f-539d-41fb-bc9b-de27d6a65d41.png" alt="Profile icon of developer Charlie" class="w-6 h-6 rounded-full mr-2">
+                                    <span class="text-sm text-gray-500">Charlie</span>
+                                </div>
+                            </div>
+                            <!-- More cards would appear here -->
+                        </div>
+                        <button class="mt-4 w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded" onclick="showAddTaskModal('done')">
+                            <i class="fas fa-plus mr-2"></i> Add Task
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-white rounded-lg p-6 smooth-shadow">
+                    <h2 class="text-xl font-bold mb-4">Sprint Goals</h2>
+                    <div id="sprint-goals">
+                        <div class="flex items-center mb-2">
+                            <input type="checkbox" class="mr-3 h-5 w-5" checked>
+                            <span>Implement core authentication flow</span>
+                        </div>
+                        <div class="flex items-center mb-2">
+                            <input type="checkbox" class="mr-3 h-5 w-5">
+                            <span>Redesign dashboard UI</span>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" class="mr-3 h-5 w-5">
+                            <span>Improve API performance</span>
+                        </div>
+                    </div>
+                    <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="showAddGoalModal()">
+                        <i class="fas fa-plus mr-2"></i> Add Goal
+                    </button>
+                </div>
+            </div>
+
+            <!-- Backlog Section -->
+            <div id="backlog-section" class="hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold">Product Backlog</h2>
+                    <div class="flex space-x-4">
+                        <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded" onclick="showAddStoryModal()">
+                            <i class="fas fa-plus mr-2"></i> Add User Story
+                        </button>
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            <i class="fas fa-magic mr-2"></i> AI Prioritize
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 smooth-shadow">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Story</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Story Points</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">US-101</td>
+                                    <td class="px-6 py-4">As a user, I want to log in using Google account</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">High</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <button class="text-blue-600 hover:text-blue-900 mr-3"><i class="fas fa-edit"></i></button>
+                                        <button class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <!-- More rows would appear here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics-section" class="hidden">
+                <h2 class="text-2xl font-bold mb-6">Team Analytics</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-xl font-bold mb-4">Velocity Trends</h3>
+                        <div class="h-64">
+                            <canvas id="velocity-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-xl font-bold mb-4">Story Completion Time</h3>
+                        <div class="h-64">
+                            <canvas id="completion-time-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 smooth-shadow mb-6">
+                    <h3 class="text-xl font-bold mb-4">Historical Burndown</h3>
+                    <div class="h-96">
+                        <canvas id="historical-burndown-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 smooth-shadow">
+                    <h3 class="text-xl font-bold mb-4">AI Recommendations</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start p-4 bg-blue-50 rounded-lg">
+                            <div class="mr-4">
+                                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-lightbulb text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="font-medium">Sprint Length Optimization</p>
+                                <p class="text-gray-600">Based on past performance, your team may benefit from 3-week sprints instead of 2 weeks.</p>
+                            </div>
+                        </div>
+                        <!-- More recommendations would appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Retrospective Section -->
+            <div id="retro-section" class="hidden">
+                <h2 class="text-2xl font-bold mb-6">Sprint Retrospective</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-green-50 rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-lg font-bold mb-4 text-green-800">What Went Well</h3>
+                        <ul class="list-disc list-inside text-green-700 space-y-2" id="went-well-list">
+                            <li>Completed authentication ahead of schedule</li>
+                            <!-- More items would appear here -->
+                        </ul>
+                        <button class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" onclick="showAddRetroItemModal('went-well')">
+                            <i class="fas fa-plus mr-2"></i> Add Item
+                        </button>
+                    </div>
+                    
+                    <div class="bg-yellow-50 rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-lg font-bold mb-4 text-yellow-800">What Could Improve</h3>
+                        <ul class="list-disc list-inside text-yellow-700 space-y-2" id="could-improve-list">
+                            <li>API rate limiting blocked progress</li>
+                            <!-- More items would appear here -->
+                        </ul>
+                        <button class="mt-4 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-700" onclick="showAddRetroItemModal('could-improve')">
+                            <i class="fas fa-plus mr-2"></i> Add Item
+                        </button>
+                    </div>
+                    
+                    <div class="bg-blue-50 rounded-lg p-6 smooth-shadow">
+                        <h3 class="text-lg font-bold mb-4 text-blue-800">Action Items</h3>
+                        <ul class="list-disc list-inside text-blue-700 space-y-2" id="action-items-list">
+                            <li>Request higher API rate limits</li>
+                            <!-- More items would appear here -->
+                        </ul>
+                        <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700" onclick="showAddRetroItemModal('action-items')">
+                            <i class="fas fa-plus mr-2"></i> Add Item
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg p-6 smooth-shadow">
+                    <h3 class="text-xl font-bold mb-4">Sentiment Analysis</h3>
+                    <div class="h-64">
+                        <canvas id="sentiment-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center">
+                    <p>AI Scrum Master © 2023</p>
+                    <div class="flex space-x-4">
+                        <button class="text-gray-300 hover:text-white"><i class="fab fa-github"></i></button>
+                        <button class="text-gray-300 hover:text-white"><i class="fab fa-twitter"></i></button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="add-task-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Add New Task</h3>
+                <button onclick="closeModal('add-task-modal')" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Task Name</label>
+                    <input type="text" id="task-name" class="w-full border border-gray-300 rounded px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Assignee</label>
+                    <select id="task-assignee" class="w-full border border-gray-300 rounded px-3 py-2">
+                        <option value="">Select assignee</option>
+                        <option>Alice</option>
+                        <option>Bob</option>
+                        <option>Charlie</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Story Points</label>
+                    <select id="task-points" class="w-full border border-gray-300 rounded px-3 py-2">
+                        <option value="">Select points</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="8">8</option>
+                        <option value="13">13</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+                    <div class="flex space-x-4">
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="priority" value="high" class="h-4 w-4 text-red-600">
+                            <span class="ml-2">High</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="priority" value="medium" class="h-4 w-4 text-yellow-600" checked>
+                            <span class="ml-2">Medium</span>
+                        </label>
+                        <label class="inline-flex items-center">
+                            <input type="radio" name="priority" value="low" class="h-4 w-4 text-green-600">
+                            <span class="ml-2">Low</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button onclick="closeModal('add-task-modal')" class="px-4 py-2 border border-gray-300 rounded text-gray-700 hover:bg-gray-50">Cancel</button>
+                <button onclick="addTask()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Add Task</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- More modals would follow similar pattern -->
+
+    <!-- Add JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Simple drag and drop functionality
+        const cards = document.querySelectorAll('.story-card');
+        cards.forEach(card => {
+            card.setAttribute('draggable', 'true');
+            card.addEventListener('dragstart', handleDragStart);
+        });
+
+        const columns = document.querySelectorAll('.kanban-column');
+        columns.forEach(column => {
+            column.addEventListener('dragover', handleDragOver);
+            column.addEventListener('drop', handleDrop);
+            column.addEventListener('dragenter', handleDragEnter);
+            column.addEventListener('dragleave', handleDragLeave);
+        });
+
+        let draggedCard = null;
+
+        function handleDragStart(e) {
+            draggedCard = this;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            return false;
+        }
+
+        function handleDrop(e) {
+            e.stopPropagation();
+            if (draggedCard !== null) {
+                draggedCard.style.opacity = '1';
+                draggedCard.style.border = 'none';
+                this.querySelector('div').appendChild(draggedCard);
+            }
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            this.classList.add('border-blue-500', 'border-2');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('border-blue-500', 'border-2');
+        }
+
+        // Navigation functionality
+        function showSection(sectionId) {
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('sprint-section').classList.add('hidden');
+            document.getElementById('backlog-section').classList.add('hidden');
+            document.getElementById('analytics-section').classList.add('hidden');
+            document.getElementById('retro-section').classList.add('hidden');
+            
+            document.getElementById(`${sectionId}-section`).classList.remove('hidden');
+        }
+
+        // Modal functions
+        function showAddTaskModal(column) {
+            document.getElementById('add-task-modal').classList.remove('hidden');
+            // Additional logic to track which column is adding
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function addTask() {
+            const taskName = document.getElementById('task-name').value;
+            const assignee = document.getElementById('task-assignee').value;
+            const points = document.getElementById('task-points').value;
+            const priority = document.querySelector('input[name="priority"]:checked').value;
+            
+            // Add task to appropriate column
+            closeModal('add-task-modal');
+        }
+
+        // Chart initialization
+        function initCharts() {
+            // Burndown chart
+            const burndownCtx = document.getElementById('burndown-chart').getContext('2d');
+            new Chart(burndownCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7', 'Day 8', 'Day 9', 'Day 10'],
+                    datasets: [{
+                        label: 'Actual',
+                        data: [32, 29, 25, 22, 21, 18, 15, 14, 10, 8],
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        tension: 0.1,
+                        fill: true
+                    }, {
+                        label: 'Ideal',
+                        data: [32, 28.8, 25.6, 22.4, 19.2, 16, 12.8, 9.6, 6.4, 3.2, 0],
+                        borderColor: '#9ca3af',
+                        borderDash: [5, 5],
+                        backgroundColor: 'transparent'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Velocity chart (using same canvas element for demo)
+            const velocityCtx = document.getElementById('velocity-chart').getContext('2d');
+            new Chart(velocityCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sprint 5', 'Sprint 6', 'Sprint 7', 'Sprint 8', 'Sprint 9', 'Sprint 10', 'Sprint 11'],
+                    datasets: [{
+                        label: 'Story Points Completed',
+                        data: [18, 22, 20, 24, 23, 25, 27],
+                        backgroundColor: '#818cf8'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // More charts would be initialized similarly
+        }
+
+        // AI functions
+        function generateDailyInsights() {
+            const aiMessage = `Based on today's updates, here are my recommendations:
+            
+            1. Alice should collaborate with Charlie to resolve the API rate limiting issue
+            2. Bob is making good progress on the UI redesign
+            3. The team is tracking slightly behind but should catch up
+            4. Consider adding 1-2 more stories from the backlog if velocity allows
+            `;
+            
+            document.getElementById('days-remaining').textContent = '6'; // Update days remaining
+            document.getElementById('tasks-completed').textContent = '19/32';
+            
+            // In a real app, this would be generated by AI based on the current state
+            alert('Generated AI Insights:\n\n' + aiMessage);
+        }
+
+        function completeSprint() {
+            if (confirm('Are you sure you want to complete this sprint?')) {
+                alert('Sprint completed! Moving unfinished items to backlog.');
+            }
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            document.getElementById('standup-date').textContent = today.toLocaleDateString('en-US', 
+                { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            showSection('dashboard');
+            initCharts();
+        });
+    </script>
+</body>
+</html>
+

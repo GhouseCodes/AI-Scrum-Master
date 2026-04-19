@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_BASE_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - scrum-network
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      - API_KEY=demo-api-key
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATABASE_URL=sqlite:///./scrum_master.db
+    volumes:
+      - backend-data:/app/data
+    depends_on:
+      - ai-services
+    networks:
+      - scrum-network
+
+  ai-services:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.ai
+    ports:
+      - "8001:8001"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - WHISPER_API_KEY=${WHISPER_API_KEY}
+    networks:
+      - scrum-network
+
+volumes:
+  backend-data:
+
+networks:
+  scrum-network:
+    driver: bridge

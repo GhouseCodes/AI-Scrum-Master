@@ -1,0 +1,18 @@
+# AI Services Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy requirements and install dependencies
+COPY ai-services/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy source code
+COPY ai-services/ .
+
+# Expose port
+EXPOSE 8001
+
+# Run the AI service (if it were a web service)
+# For now, this is just for consistency with the architecture
+CMD ["python", "-c", "print('AI Services loaded successfully')"]
